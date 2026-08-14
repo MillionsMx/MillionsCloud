@@ -47,8 +47,16 @@ jobs:
             php -l "$f" 2>&1
           done
 
-          echo "===== last laravel log (150 lines) ====="
-          ls -1t storage/logs/*.log 2>/dev/null | head -1 | xargs -r tail -n 150
+          echo "===== today's laravel log (150 lines) ====="
+          today=$(date +%Y-%m-%d)
+          log="storage/logs/laravel-${today}.log"
+          if [ -f "$log" ]; then
+            tail -n 150 "$log"
+          else
+            echo "no $log; logs modified in the last day:"
+            find storage/logs -name '*.log' -mtime -1 -printf '%TY-%Tm-%Td %TH:%TM %p\n' 2>/dev/null
+            find storage/logs -name '*.log' -mtime -1 -exec tail -n 60 {} +
+          fi
 
           echo "===== permissions / caches ====="
           ls -ld storage storage/logs storage/framework bootstrap/cache public/storage 2>&1
