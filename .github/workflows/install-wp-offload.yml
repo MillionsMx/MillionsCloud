@@ -38,9 +38,10 @@ jobs:
           wp=/var/www/status.millions.mx/htdocs
           ssh_opts="-i ~/.ssh/my_deploy_key -p ${DEPLOY_PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
 
-          pwd; ls -la deploy/wordpress/ || true
+          # scp takes -P for the port, ssh takes -p
+          scp_opts="-i ~/.ssh/my_deploy_key -P ${DEPLOY_PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
 
-          scp ${ssh_opts} "${GITHUB_WORKSPACE}/deploy/wordpress/millions-b2-offload.php" \
+          scp ${scp_opts} "${GITHUB_WORKSPACE}/deploy/wordpress/millions-b2-offload.php" \
             "${DEPLOY_USER}@${DEPLOY_HOST}:/tmp/millions-b2-offload.php"
 
           ssh ${ssh_opts} "${DEPLOY_USER}@${DEPLOY_HOST}" "bash -s" <<REMOTE
