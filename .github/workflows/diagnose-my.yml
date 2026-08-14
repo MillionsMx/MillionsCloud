@@ -54,6 +54,15 @@ jobs:
           ls -ld storage storage/logs storage/framework bootstrap/cache public/storage 2>&1
           ls -1 bootstrap/cache 2>&1
 
+          echo "===== dns / outbound connectivity ====="
+          cat /etc/resolv.conf 2>&1
+          for host in s3.us-east-005.backblazeb2.com api.backblazeb2.com github.com; do
+            echo "--- $host"
+            getent hosts "$host" || echo "getent: NOT RESOLVED"
+            curl -sS -o /dev/null -m 10 -w "curl: %{http_code} (dns %{time_namelookup}s)\n" \
+              "https://$host" 2>&1 | head -2
+          done
+
           echo "===== web server error log (tail) ====="
           tail -n 40 /var/log/nginx/error.log 2>/dev/null || \
             tail -n 40 /var/log/apache2/error.log 2>/dev/null || \
