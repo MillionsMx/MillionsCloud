@@ -42,6 +42,7 @@ jobs:
           scp_opts="-i ~/.ssh/my_deploy_key -P ${DEPLOY_PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
 
           scp ${scp_opts} "${GITHUB_WORKSPACE}/deploy/wordpress/millions-b2-offload.php" \
+            "${GITHUB_WORKSPACE}/deploy/wordpress/zz-delete-trace.php" \
             "${DEPLOY_USER}@${DEPLOY_HOST}:/tmp/"
 
           ssh ${ssh_opts} "${DEPLOY_USER}@${DEPLOY_HOST}" "bash -s" <<REMOTE
