@@ -66,16 +66,26 @@ jobs:
           grep -m1 -A2 '"name": "aws/aws-sdk-php"' vendor/composer/installed.json 2>/dev/null | head -3
           php -r 'require "vendor/autoload.php"; echo "runtime: ", Aws\Sdk::VERSION, "\n";' 2>&1 | tail -1
 
+          echo "===== backblaze rejection message (from logs) ====="
+          grep -ho 'Unsupported[^<]*' storage/logs/*.log 2>/dev/null | sort -u | head -5
+          grep -ho '<Message>[^<]*' storage/logs/*.log 2>/dev/null | sort -u | head -5
+
           echo "===== server-side upload test ====="
-          php artisan tinker --execute '
-            try {
-              Storage::disk("uploads")->put("diag-test.txt", "ok");
-              echo "PUT ok: ", var_export(Storage::disk("uploads")->exists("diag-test.txt"), true), "\n";
-              Storage::disk("uploads")->delete("diag-test.txt");
+          cat > /tmp/diag-upload.php <<'PHP'
+          <?php
+          $app = require __DIR__ . '/../var/www/my.millions.mx/htdocs/bootstrap/app.php';
+          $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+          try {
+              Storage::disk('uploads')->put('diag-test.txt', 'ok');
+              echo 'PUT ok: ', var_export(Storage::disk('uploads')->exists('diag-test.txt'), true), "\n";
+              Storage::disk('uploads')->delete('diag-test.txt');
               echo "cleanup done\n";
-            } catch (\Throwable $e) {
-              echo "FAILED: ", get_class($e), ": ", substr($e->getMessage(), 0, 600), "\n";
-            }' 2>&1 | grep -v Deprecated
+          } catch (\Throwable $e) {
+              echo 'FAILED: ', get_class($e), ': ', substr($e->getMessage(), 0, 900), "\n";
+          }
+          PHP
+          php /tmp/diag-upload.php 2>&1 | grep -v Deprecated
+          rm -f /tmp/diag-upload.php
 
           echo "===== dns / outbound connectivity ====="
           cat /etc/resolv.conf 2>&1
