@@ -1,0 +1,418 @@
+{
+  "_ArrowBack-3bbfae61.js": {
+    "file": "assets/ArrowBack-3bbfae61.js",
+    "imports": [
+      "resources/client/main.tsx"
+    ]
+  },
+  "_CalendarToday-fcbbade5.js": {
+    "file": "assets/CalendarToday-fcbbade5.js",
+    "imports": [
+      "resources/client/main.tsx"
+    ]
+  },
+  "_GridView-63b22471.js": {
+    "file": "assets/GridView-63b22471.js",
+    "imports": [
+      "resources/client/main.tsx"
+    ]
+  },
+  "_TaskAlt-885eb3d1.js": {
+    "file": "assets/TaskAlt-885eb3d1.js",
+    "imports": [
+      "resources/client/main.tsx"
+    ]
+  },
+  "_TrendingFlat-b6bc5710.js": {
+    "file": "assets/TrendingFlat-b6bc5710.js",
+    "imports": [
+      "resources/client/main.tsx"
+    ]
+  },
+  "_app-admin-routes.lazy-63fbf4ae.js": {
+    "assets": [
+      "assets/team-de984127.svg",
+      "assets/dropdown-menu-c9b3bd6a.svg",
+      "assets/articles-8bfd9f17.svg",
+      "assets/around-the-world-df9b11c5.svg",
+      "assets/software-engineer-ba026106.svg",
+      "assets/upload-cabfc914.svg",
+      "assets/subscriptions-7eacea42.svg",
+      "assets/font-a5a81d1a.svg",
+      "assets/timeline-172fbeee.svg",
+      "assets/bug-fixing-bd601a66.svg",
+      "assets/opened-4dded9dc.svg"
+    ],
+    "dynamicImports": [
+      "common/foundation/resources/client/ui/icon-picker/icon-list.tsx",
+      "common/foundation/resources/client/ace-editor/ace-editor.tsx",
+      "common/foundation/resources/client/article-editor/article-body-editor.tsx",
+      "common/foundation/resources/client/article-editor/article-body-editor.tsx"
+    ],
+    "file": "assets/app-admin-routes.lazy-63fbf4ae.js",
+    "imports": [
+      "resources/client/main.tsx",
+      "_dashboard-layout-e15ef7b7.js",
+      "_ArrowBack-3bbfae61.js",
+      "_breadcrumb-2a2d0292.js",
+      "_formatted-bytes-070efe27.js",
+      "_use-resume-subscription-f7d0c4ca.js"
+    ],
+    "isDynamicEntry": true
+  },
+  "_billing-redirect-message-ea0e2a9e.js": {
+    "file": "assets/billing-redirect-message-ea0e2a9e.js",
+    "imports": [
+      "resources/client/main.tsx",
+      "_TaskAlt-885eb3d1.js"
+    ]
+  },
+  "_breadcrumb-2a2d0292.js": {
+    "file": "assets/breadcrumb-2a2d0292.js",
+    "imports": [
+      "resources/client/main.tsx"
+    ]
+  },
+  "_c-e4cf58d6.js": {
+    "file": "assets/c-e4cf58d6.js",
+    "imports": [
+      "resources/client/main.tsx"
+    ]
+  },
+  "_dashboard-layout-e15ef7b7.js": {
+    "file": "assets/dashboard-layout-e15ef7b7.js",
+    "imports": [
+      "resources/client/main.tsx",
+      "_ArrowBack-3bbfae61.js",
+      "_breadcrumb-2a2d0292.js"
+    ]
+  },
+  "_formatted-bytes-070efe27.js": {
+    "file": "assets/formatted-bytes-070efe27.js",
+    "imports": [
+      "resources/client/main.tsx"
+    ]
+  },
+  "_index-b0c59550.js": {
+    "file": "assets/index-b0c59550.js",
+    "imports": [
+      "resources/client/main.tsx"
+    ]
+  },
+  "_use-resume-subscription-f7d0c4ca.js": {
+    "file": "assets/use-resume-subscription-f7d0c4ca.js",
+    "imports": [
+      "resources/client/main.tsx"
+    ]
+  },
+  "common/foundation/resources/client/ace-editor/ace-editor.tsx": {
+    "assets": [
+      "assets/worker-css-b70c72a0.js",
+      "assets/worker-html-63aac2ef.js",
+      "assets/worker-php-47e5dfe7.js",
+      "assets/worker-javascript-c4599136.js"
+    ],
+    "file": "assets/ace-editor-5f73b32b.js",
+    "imports": [
+      "resources/client/main.tsx",
+      "_index-b0c59550.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "common/foundation/resources/client/ace-editor/ace-editor.tsx"
+  },
+  "common/foundation/resources/client/admin/analytics/admin-report-page.tsx": {
+    "dynamicImports": [
+      "common/foundation/resources/client/charts/lazy-chart.tsx"
+    ],
+    "file": "assets/admin-report-page-c1015bcd.js",
+    "imports": [
+      "resources/client/main.tsx",
+      "_TrendingFlat-b6bc5710.js",
+      "_ArrowBack-3bbfae61.js",
+      "_formatted-bytes-070efe27.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "common/foundation/resources/client/admin/analytics/admin-report-page.tsx"
+  },
+  "common/foundation/resources/client/admin/appearance/sections/menus/dropdown-menu.svg": {
+    "file": "assets/dropdown-menu-c9b3bd6a.svg",
+    "src": "common/foundation/resources/client/admin/appearance/sections/menus/dropdown-menu.svg"
+  },
+  "common/foundation/resources/client/admin/custom-pages/articles.svg": {
+    "file": "assets/articles-8bfd9f17.svg",
+    "src": "common/foundation/resources/client/admin/custom-pages/articles.svg"
+  },
+  "common/foundation/resources/client/admin/file-entry/upload.svg": {
+    "file": "assets/upload-cabfc914.svg",
+    "src": "common/foundation/resources/client/admin/file-entry/upload.svg"
+  },
+  "common/foundation/resources/client/admin/logging/error/bug-fixing.svg": {
+    "file": "assets/bug-fixing-bd601a66.svg",
+    "src": "common/foundation/resources/client/admin/logging/error/bug-fixing.svg"
+  },
+  "common/foundation/resources/client/admin/logging/outgoing-email/opened.svg": {
+    "file": "assets/opened-4dded9dc.svg",
+    "src": "common/foundation/resources/client/admin/logging/outgoing-email/opened.svg"
+  },
+  "common/foundation/resources/client/admin/logging/schedule/timeline.svg": {
+    "file": "assets/timeline-172fbeee.svg",
+    "src": "common/foundation/resources/client/admin/logging/schedule/timeline.svg"
+  },
+  "common/foundation/resources/client/admin/roles/team.svg": {
+    "file": "assets/team-de984127.svg",
+    "src": "common/foundation/resources/client/admin/roles/team.svg"
+  },
+  "common/foundation/resources/client/admin/subscriptions/subscriptions.svg": {
+    "file": "assets/subscriptions-7eacea42.svg",
+    "src": "common/foundation/resources/client/admin/subscriptions/subscriptions.svg"
+  },
+  "common/foundation/resources/client/admin/tags/software-engineer.svg": {
+    "file": "assets/software-engineer-ba026106.svg",
+    "src": "common/foundation/resources/client/admin/tags/software-engineer.svg"
+  },
+  "common/foundation/resources/client/admin/translations/around-the-world.svg": {
+    "file": "assets/around-the-world-df9b11c5.svg",
+    "src": "common/foundation/resources/client/admin/translations/around-the-world.svg"
+  },
+  "common/foundation/resources/client/article-editor/article-body-editor.css": {
+    "file": "assets/article-body-editor-c0ff5600.css",
+    "src": "common/foundation/resources/client/article-editor/article-body-editor.css"
+  },
+  "common/foundation/resources/client/article-editor/article-body-editor.tsx": {
+    "css": [
+      "assets/article-body-editor-c0ff5600.css"
+    ],
+    "file": "assets/article-body-editor-6b840d4f.js",
+    "imports": [
+      "resources/client/main.tsx",
+      "_c-e4cf58d6.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "common/foundation/resources/client/article-editor/article-body-editor.tsx"
+  },
+  "common/foundation/resources/client/auth/ui/account-settings/access-token-panel/secure-files.svg": {
+    "file": "assets/secure-files-17b4728d.svg",
+    "src": "common/foundation/resources/client/auth/ui/account-settings/access-token-panel/secure-files.svg"
+  },
+  "common/foundation/resources/client/auth/ui/auth-layout/auth-bg.svg": {
+    "file": "assets/auth-bg-8529ec0e.svg",
+    "src": "common/foundation/resources/client/auth/ui/auth-layout/auth-bg.svg"
+  },
+  "common/foundation/resources/client/billing/billing-page/panels/paypal.svg": {
+    "file": "assets/paypal-c2a77c63.svg",
+    "src": "common/foundation/resources/client/billing/billing-page/panels/paypal.svg"
+  },
+  "common/foundation/resources/client/billing/billing-page/routes/billing-page-routes.lazy.tsx": {
+    "assets": [
+      "assets/paypal-c2a77c63.svg"
+    ],
+    "file": "assets/billing-page-routes.lazy-1d4e06fc.js",
+    "imports": [
+      "resources/client/main.tsx",
+      "_CalendarToday-fcbbade5.js",
+      "_breadcrumb-2a2d0292.js",
+      "_use-resume-subscription-f7d0c4ca.js",
+      "_billing-redirect-message-ea0e2a9e.js",
+      "_TaskAlt-885eb3d1.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "common/foundation/resources/client/billing/billing-page/routes/billing-page-routes.lazy.tsx"
+  },
+  "common/foundation/resources/client/billing/checkout/routes/checkout-routes.lazy.tsx": {
+    "file": "assets/checkout-routes.lazy-380368a6.js",
+    "imports": [
+      "resources/client/main.tsx",
+      "_billing-redirect-message-ea0e2a9e.js",
+      "_TaskAlt-885eb3d1.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "common/foundation/resources/client/billing/checkout/routes/checkout-routes.lazy.tsx"
+  },
+  "common/foundation/resources/client/charts/lazy-chart.tsx": {
+    "file": "assets/lazy-chart-08e1709e.js",
+    "imports": [
+      "resources/client/main.tsx"
+    ],
+    "isDynamicEntry": true,
+    "src": "common/foundation/resources/client/charts/lazy-chart.tsx"
+  },
+  "common/foundation/resources/client/notifications/empty-state/notify.svg": {
+    "file": "assets/notify-d1de4ec3.svg",
+    "src": "common/foundation/resources/client/notifications/empty-state/notify.svg"
+  },
+  "common/foundation/resources/client/swagger/swagger-api-docs-page.css": {
+    "file": "assets/swagger-api-docs-page-34ffaf07.css",
+    "src": "common/foundation/resources/client/swagger/swagger-api-docs-page.css"
+  },
+  "common/foundation/resources/client/swagger/swagger-api-docs-page.tsx": {
+    "css": [
+      "assets/swagger-api-docs-page-34ffaf07.css"
+    ],
+    "file": "assets/swagger-api-docs-page-7ffe14bc.js",
+    "imports": [
+      "resources/client/main.tsx",
+      "_index-b0c59550.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "common/foundation/resources/client/swagger/swagger-api-docs-page.tsx"
+  },
+  "common/foundation/resources/client/text-editor/highlight/highlight.css": {
+    "file": "assets/highlight-b5e2c008.css",
+    "src": "common/foundation/resources/client/text-editor/highlight/highlight.css"
+  },
+  "common/foundation/resources/client/text-editor/highlight/highlight.ts": {
+    "css": [
+      "assets/highlight-b5e2c008.css"
+    ],
+    "file": "assets/highlight-e36522b6.js",
+    "imports": [
+      "_c-e4cf58d6.js",
+      "resources/client/main.tsx"
+    ],
+    "isDynamicEntry": true,
+    "src": "common/foundation/resources/client/text-editor/highlight/highlight.ts"
+  },
+  "common/foundation/resources/client/ui/font-selector/font.svg": {
+    "file": "assets/font-a5a81d1a.svg",
+    "src": "common/foundation/resources/client/ui/font-selector/font.svg"
+  },
+  "common/foundation/resources/client/ui/icon-picker/icon-list.tsx": {
+    "file": "assets/icon-list-8a0fa8b7.js",
+    "imports": [
+      "resources/client/main.tsx",
+      "_dashboard-layout-e15ef7b7.js",
+      "_ArrowBack-3bbfae61.js",
+      "_GridView-63b22471.js",
+      "_CalendarToday-fcbbade5.js",
+      "_breadcrumb-2a2d0292.js",
+      "_app-admin-routes.lazy-63fbf4ae.js",
+      "_use-resume-subscription-f7d0c4ca.js",
+      "_TaskAlt-885eb3d1.js",
+      "_TrendingFlat-b6bc5710.js",
+      "_formatted-bytes-070efe27.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "common/foundation/resources/client/ui/icon-picker/icon-list.tsx"
+  },
+  "common/foundation/resources/client/ui/not-found-page/404-1.png": {
+    "file": "assets/404-1-176145e9.png",
+    "src": "common/foundation/resources/client/ui/not-found-page/404-1.png"
+  },
+  "common/foundation/resources/client/ui/not-found-page/404-2.png": {
+    "file": "assets/404-2-14c4a897.png",
+    "src": "common/foundation/resources/client/ui/not-found-page/404-2.png"
+  },
+  "node_modules/ace-builds/src-noconflict/worker-css.js": {
+    "file": "assets/worker-css-b70c72a0.js",
+    "src": "node_modules/ace-builds/src-noconflict/worker-css.js"
+  },
+  "node_modules/ace-builds/src-noconflict/worker-html.js": {
+    "file": "assets/worker-html-63aac2ef.js",
+    "src": "node_modules/ace-builds/src-noconflict/worker-html.js"
+  },
+  "node_modules/ace-builds/src-noconflict/worker-javascript.js": {
+    "file": "assets/worker-javascript-c4599136.js",
+    "src": "node_modules/ace-builds/src-noconflict/worker-javascript.js"
+  },
+  "node_modules/ace-builds/src-noconflict/worker-php.js": {
+    "file": "assets/worker-php-47e5dfe7.js",
+    "src": "node_modules/ace-builds/src-noconflict/worker-php.js"
+  },
+  "resources/client/admin/verts/drive.png": {
+    "file": "assets/drive-d7c1e515.png",
+    "src": "resources/client/admin/verts/drive.png"
+  },
+  "resources/client/admin/verts/file-preview.png": {
+    "file": "assets/file-preview-8afa3b5f.png",
+    "src": "resources/client/admin/verts/file-preview.png"
+  },
+  "resources/client/admin/verts/landing-top.png": {
+    "file": "assets/landing-top-e0e553bc.png",
+    "src": "resources/client/admin/verts/landing-top.png"
+  },
+  "resources/client/drive/details-sidebar/detailed-examination.svg": {
+    "file": "assets/detailed-examination-33c85772.svg",
+    "src": "resources/client/drive/details-sidebar/detailed-examination.svg"
+  },
+  "resources/client/drive/drive-page/add-files.svg": {
+    "file": "assets/add-files-107c40dd.svg",
+    "src": "resources/client/drive/drive-page/add-files.svg"
+  },
+  "resources/client/drive/drive-page/file-searching.svg": {
+    "file": "assets/file-searching-49556098.svg",
+    "src": "resources/client/drive/drive-page/file-searching.svg"
+  },
+  "resources/client/drive/drive-page/loving-it.svg": {
+    "file": "assets/loving-it-585c130e.svg",
+    "src": "resources/client/drive/drive-page/loving-it.svg"
+  },
+  "resources/client/drive/drive-page/throw-away.svg": {
+    "file": "assets/throw-away-389510cc.svg",
+    "src": "resources/client/drive/drive-page/throw-away.svg"
+  },
+  "resources/client/drive/drive-page/time-management.svg": {
+    "file": "assets/time-management-5219b76e.svg",
+    "src": "resources/client/drive/drive-page/time-management.svg"
+  },
+  "resources/client/drive/drive-routes.lazy.tsx": {
+    "assets": [
+      "assets/add-files-107c40dd.svg",
+      "assets/time-management-5219b76e.svg",
+      "assets/file-searching-49556098.svg",
+      "assets/throw-away-389510cc.svg",
+      "assets/loving-it-585c130e.svg",
+      "assets/share-70babf29.svg",
+      "assets/detailed-examination-33c85772.svg",
+      "assets/my-files-88476671.svg"
+    ],
+    "file": "assets/drive-routes.lazy-ccec4302.js",
+    "imports": [
+      "resources/client/main.tsx",
+      "_GridView-63b22471.js",
+      "_dashboard-layout-e15ef7b7.js",
+      "_breadcrumb-2a2d0292.js",
+      "_ArrowBack-3bbfae61.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/client/drive/drive-routes.lazy.tsx"
+  },
+  "resources/client/drive/files/dialogs/move-entries-dialog/my-files.svg": {
+    "file": "assets/my-files-88476671.svg",
+    "src": "resources/client/drive/files/dialogs/move-entries-dialog/my-files.svg"
+  },
+  "resources/client/drive/shareable-link/shareable-link-page/folder-preview/share.svg": {
+    "file": "assets/share-70babf29.svg",
+    "src": "resources/client/drive/shareable-link/shareable-link-page/folder-preview/share.svg"
+  },
+  "resources/client/main.css": {
+    "file": "assets/main-8f398071.css",
+    "src": "resources/client/main.css"
+  },
+  "resources/client/main.tsx": {
+    "assets": [
+      "assets/file-preview-8afa3b5f.png",
+      "assets/drive-d7c1e515.png",
+      "assets/landing-top-e0e553bc.png",
+      "assets/404-1-176145e9.png",
+      "assets/404-2-14c4a897.png",
+      "assets/auth-bg-8529ec0e.svg",
+      "assets/notify-d1de4ec3.svg",
+      "assets/secure-files-17b4728d.svg"
+    ],
+    "css": [
+      "assets/main-8f398071.css"
+    ],
+    "dynamicImports": [
+      "common/foundation/resources/client/text-editor/highlight/highlight.ts",
+      "resources/client/drive/drive-routes.lazy.tsx",
+      "common/foundation/resources/client/billing/checkout/routes/checkout-routes.lazy.tsx",
+      "common/foundation/resources/client/billing/billing-page/routes/billing-page-routes.lazy.tsx",
+      "_app-admin-routes.lazy-63fbf4ae.js",
+      "common/foundation/resources/client/admin/analytics/admin-report-page.tsx",
+      "common/foundation/resources/client/swagger/swagger-api-docs-page.tsx"
+    ],
+    "file": "assets/main-e8681952.js",
+    "isEntry": true,
+    "src": "resources/client/main.tsx"
+  }
+}

@@ -1,0 +1,78 @@
+name: Deploy my.millions.mx
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-my-millions-mx
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate deployment secrets
+        shell: bash
+        env:
+          DEPLOY_KEY: ${{ secrets.MY_DEPLOY_KEY }}
+          DEPLOY_HOST: ${{ secrets.MY_DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.MY_DEPLOY_PORT }}
+          DEPLOY_USER: ${{ secrets.MY_DEPLOY_USER }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.MY_DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          for value in DEPLOY_KEY DEPLOY_HOST DEPLOY_PORT DEPLOY_USER DEPLOY_KNOWN_HOSTS; do
+            if [ -z "${!value}" ]; then
+              echo "Missing required secret: $value" >&2
+              exit 1
+            fi
+          done
+
+      - name: Configure SSH
+        shell: bash
+        env:
+          DEPLOY_KEY: ${{ secrets.MY_DEPLOY_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.MY_DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/my_deploy_key
+          chmod 600 ~/.ssh/my_deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy application files
+        shell: bash
+        env:
+          DEPLOY_HOST: ${{ secrets.MY_DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.MY_DEPLOY_PORT }}
+          DEPLOY_USER: ${{ secrets.MY_DEPLOY_USER }}
+        run: |
+          set -euo pipefail
+          target=/var/www/my.millions.mx/htdocs
+          ssh_opts="-i ~/.ssh/my_deploy_key -p ${DEPLOY_PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
+
+          rsync -az --delete \
+            --exclude='.git/' \
+            --exclude='.env' \
+            --exclude='.env.*' \
+            --exclude='storage/' \
+            --exclude='vendor/' \
+            --exclude='database/*.sqlite' \
+            --exclude='database/*.sqlite3' \
+            --exclude='database/*.db' \
+            --exclude='website.zip' \
+            -e "ssh ${ssh_opts}" \
+            ./ "${DEPLOY_USER}@${DEPLOY_HOST}:${target}/"
+
+          ssh ${ssh_opts} "${DEPLOY_USER}@${DEPLOY_HOST}" \
+            "test -f '${target}/artisan'"
