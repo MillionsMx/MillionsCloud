@@ -62,6 +62,21 @@ jobs:
           ls -ld storage storage/logs storage/framework bootstrap/cache public/storage 2>&1
           ls -1 bootstrap/cache 2>&1
 
+          echo "===== aws sdk version ====="
+          grep -m1 -A2 '"name": "aws/aws-sdk-php"' vendor/composer/installed.json 2>/dev/null | head -3
+          php -r 'require "vendor/autoload.php"; echo "runtime: ", Aws\Sdk::VERSION, "\n";' 2>&1 | tail -1
+
+          echo "===== server-side upload test ====="
+          php artisan tinker --execute '
+            try {
+              Storage::disk("uploads")->put("diag-test.txt", "ok");
+              echo "PUT ok: ", var_export(Storage::disk("uploads")->exists("diag-test.txt"), true), "\n";
+              Storage::disk("uploads")->delete("diag-test.txt");
+              echo "cleanup done\n";
+            } catch (\Throwable $e) {
+              echo "FAILED: ", get_class($e), ": ", substr($e->getMessage(), 0, 600), "\n";
+            }' 2>&1 | grep -v Deprecated
+
           echo "===== dns / outbound connectivity ====="
           cat /etc/resolv.conf 2>&1
           for host in s3.us-east-005.backblazeb2.com api.backblazeb2.com github.com; do
