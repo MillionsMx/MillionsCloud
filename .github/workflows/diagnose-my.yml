@@ -62,6 +62,18 @@ jobs:
           ls -ld storage storage/logs storage/framework bootstrap/cache public/storage 2>&1
           ls -1 bootstrap/cache 2>&1
 
+          echo "===== wordpress / php ====="
+          php -v | head -1
+          wp=/var/www/status.millions.mx
+          php -l "$wp/htdocs/wp-content/mu-plugins/millions-b2-offload.php" 2>&1
+          grep -c "MMX_B2_" "$wp/wp-config.php" 2>/dev/null | xargs -I{} echo "MMX_B2 constants in wp-config: {}"
+          echo "--- php-fpm log (recent)"
+          find /var/log -name '*fpm*.log' -mmin -120 2>/dev/null | while read -r f; do
+            echo "== $f"; tail -n 30 "$f"
+          done
+          echo "--- uploads dir today"
+          ls -l "$wp/htdocs/wp-content/uploads/$(date +%Y/%m)" 2>/dev/null | tail -10
+
           echo "===== other sites on this host ====="
           ls -1 /etc/nginx/sites-enabled/ 2>/dev/null
           grep -hEA3 'server_name .*(status|gex)' /etc/nginx/sites-enabled/* 2>/dev/null | grep -E 'server_name|root|proxy_pass' | head -20
