@@ -34,7 +34,8 @@ class ApplyMillionsBranding extends Command
             'branding.logo_dark_mobile' => 'images/mobile-logo-dark.png',
             'branding.logo_light_mobile' => 'images/mobile-logo-light.png',
             'branding.favicon' => 'images/favicon-original.png',
-            'branding.site_name' => 'MillionsCloud',
+            // branding.site_name is not stored here, it is read from
+            // config('app.name') / APP_NAME in .env (see Settings::$configKeys)
         ];
 
         foreach ($logos as $name => $value) {

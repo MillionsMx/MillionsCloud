@@ -48,3 +48,19 @@ jobs:
 
           ssh ${ssh_opts} "${DEPLOY_USER}@${DEPLOY_HOST}" \
             "cd '${target}' && php artisan millions:branding ${flag}"
+
+      - name: Set APP_NAME
+        if: ${{ inputs.dry_run == false }}
+        shell: bash
+        env:
+          DEPLOY_HOST: ${{ secrets.MY_DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.MY_DEPLOY_PORT }}
+          DEPLOY_USER: ${{ secrets.MY_DEPLOY_USER }}
+        run: |
+          set -euo pipefail
+          target=/var/www/my.millions.mx/htdocs
+          ssh_opts="-i ~/.ssh/my_deploy_key -p ${DEPLOY_PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
+
+          # the site name shown in titles comes from APP_NAME, not from the db
+          ssh ${ssh_opts} "${DEPLOY_USER}@${DEPLOY_HOST}" \
+            "cd '${target}' && cp -n .env .env.bak-branding && sed -i 's/^APP_NAME=.*/APP_NAME=\"MillionsCloud\"/' .env && grep '^APP_NAME=' .env && php artisan config:clear && php artisan cache:clear"

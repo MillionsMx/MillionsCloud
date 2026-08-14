@@ -3,9 +3,10 @@
 -- Run against the app database, then clear the cache (php artisan cache:clear
 -- or delete storage/framework/cache/data).
 
--- 1. Logos / site name -------------------------------------------------------
+-- 1. Logos --------------------------------------------------------------------
+-- Note: the site name is NOT stored here. It comes from APP_NAME in .env
+-- (Settings::$configKeys maps branding.site_name -> config app.name).
 INSERT INTO settings (name, value, created_at, updated_at) VALUES
-    ('branding.site_name',        'MillionsCloud',                   NOW(), NOW()),
     ('branding.logo_dark',        'images/logo-dark.png',            NOW(), NOW()),
     ('branding.logo_light',       'images/logo-light.png',           NOW(), NOW()),
     ('branding.logo_dark_mobile', 'images/mobile-logo-dark.png',     NOW(), NOW()),
