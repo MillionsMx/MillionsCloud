@@ -1,0 +1,50 @@
+name: Apply branding my.millions.mx
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Only show what would change'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  branding:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure SSH
+        shell: bash
+        env:
+          DEPLOY_KEY: ${{ secrets.MY_DEPLOY_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.MY_DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/my_deploy_key
+          chmod 600 ~/.ssh/my_deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Run millions:branding
+        shell: bash
+        env:
+          DEPLOY_HOST: ${{ secrets.MY_DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.MY_DEPLOY_PORT }}
+          DEPLOY_USER: ${{ secrets.MY_DEPLOY_USER }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          target=/var/www/my.millions.mx/htdocs
+          ssh_opts="-i ~/.ssh/my_deploy_key -p ${DEPLOY_PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
+
+          flag=''
+          if [ "$DRY_RUN" = 'true' ]; then
+            flag='--dry-run'
+          fi
+
+          ssh ${ssh_opts} "${DEPLOY_USER}@${DEPLOY_HOST}" \
+            "cd '${target}' && php artisan millions:branding ${flag}"
