@@ -62,6 +62,15 @@ jobs:
           ls -ld storage storage/logs storage/framework bootstrap/cache public/storage 2>&1
           ls -1 bootstrap/cache 2>&1
 
+          echo "===== other sites on this host ====="
+          ls -1 /etc/nginx/sites-enabled/ 2>/dev/null
+          grep -hEA3 'server_name .*(status|gex)' /etc/nginx/sites-enabled/* 2>/dev/null | grep -E 'server_name|root|proxy_pass' | head -20
+          echo "--- webroots"
+          ls -ld /var/www/*/ 2>/dev/null
+          echo "--- status app stack"
+          ls -1 /var/www/status.millions.mx/htdocs 2>/dev/null | head -20 || \
+            ls -1 /var/www/status.millions.mx 2>/dev/null | head -20
+
           echo "===== aws sdk version ====="
           grep -m1 -A2 '"name": "aws/aws-sdk-php"' vendor/composer/installed.json 2>/dev/null | head -3
           php -r 'require "vendor/autoload.php"; echo "runtime: ", Aws\Sdk::VERSION, "\n";' 2>&1 | tail -1
