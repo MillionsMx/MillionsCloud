@@ -1,0 +1,61 @@
+name: Install WP B2 offload mu-plugin
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure SSH
+        shell: bash
+        env:
+          DEPLOY_KEY: ${{ secrets.MY_DEPLOY_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.MY_DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/my_deploy_key
+          chmod 600 ~/.ssh/my_deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Copy mu-plugin into wordpress
+        shell: bash
+        env:
+          DEPLOY_HOST: ${{ secrets.MY_DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.MY_DEPLOY_PORT }}
+          DEPLOY_USER: ${{ secrets.MY_DEPLOY_USER }}
+        run: |
+          set -euo pipefail
+          wp=/var/www/status.millions.mx/htdocs
+          ssh_opts="-i ~/.ssh/my_deploy_key -p ${DEPLOY_PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
+
+          scp ${ssh_opts} deploy/wordpress/millions-b2-offload.php \
+            "${DEPLOY_USER}@${DEPLOY_HOST}:/tmp/millions-b2-offload.php"
+
+          ssh ${ssh_opts} "${DEPLOY_USER}@${DEPLOY_HOST}" "bash -s" <<REMOTE
+          set -e
+          wp="${wp}"
+          dir="\${wp}/wp-content/mu-plugins"
+
+          if [ ! -d "\${wp}/wp-content" ]; then
+            echo "no wordpress at \${wp}" >&2
+            exit 1
+          fi
+
+          mkdir -p "\${dir}" 2>/dev/null || sudo -n mkdir -p "\${dir}"
+          cp /tmp/millions-b2-offload.php "\${dir}/" 2>/dev/null || \
+            sudo -n cp /tmp/millions-b2-offload.php "\${dir}/"
+          rm -f /tmp/millions-b2-offload.php
+
+          ls -l "\${dir}/millions-b2-offload.php"
+          php -l "\${dir}/millions-b2-offload.php"
+          REMOTE
