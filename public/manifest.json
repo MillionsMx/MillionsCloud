@@ -1,7 +1,7 @@
 {
-  "name": "BeDrive",
-  "short_name": "BeDrive",
-  "theme_color": "rgb(59 130 246)",
+  "name": "MillionsCloud",
+  "short_name": "MillionsCloud",
+  "theme_color": "rgb(16 185 129)",
   "background_color": "rgb(255 255 255)",
   "display": "standalone",
   "scope": "//",

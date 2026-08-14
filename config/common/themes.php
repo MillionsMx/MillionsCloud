@@ -1,13 +1,13 @@
 <?php
 
-// primary is blue from tailwind color palette
+// primary is emerald from tailwind color palette (MillionsCloud brand)
 
 return [
     'light' => [
         '--be-foreground-base' => '0 0 0',
-        '--be-primary-light' => '191 219 254', // 200
-        '--be-primary' => '59 130 246', // 500
-        '--be-primary-dark' => '37 99 235',
+        '--be-primary-light' => '167 243 208', // emerald 200
+        '--be-primary' => '16 185 129', // emerald 500
+        '--be-primary-dark' => '5 150 105', // emerald 600
         '--be-on-primary' => '255 255 255',
         '--be-background' => '255 255 255',
         '--be-background-alt' => '246 248 250',
@@ -24,10 +24,10 @@ return [
     ],
     'dark' => [
         '--be-foreground-base' => '255 255 255',
-        '--be-primary-light' => '239 246 255', // 50
-        '--be-primary' => '191 219 254', // 200
-        '--be-primary-dark' => '147 197 253', // 300
-        '--be-on-primary' => '56 30 114',
+        '--be-primary-light' => '236 253 245', // emerald 50
+        '--be-primary' => '110 231 183', // emerald 300
+        '--be-primary-dark' => '52 211 153', // emerald 400
+        '--be-on-primary' => '6 46 35',
         '--be-background' => '23 23 26',
         '--be-background-alt' => '34 34 38',
         '--be-background-chip' => '66 68 74',
