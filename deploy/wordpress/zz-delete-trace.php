@@ -45,6 +45,26 @@ add_action(
             'post_action' => $_REQUEST['action'] ?? '(none)',
         ]);
 
+        // capturar el cuerpo de la respuesta (el json de error)
+        ob_start(function ($buffer) {
+            file_put_contents(
+                ZZ_TRACE_LOG,
+                "\n[RESPUESTA] " . substr($buffer, 0, 600) . "\n",
+                FILE_APPEND,
+            );
+            return $buffer;
+        });
+
+        // errores concretos al mover/procesar el archivo
+        add_filter('wp_handle_upload_prefilter', function ($file) {
+            zz_trace('PREFILTER', [
+                'name' => $file['name'] ?? '?',
+                'type' => $file['type'] ?? '?',
+                'error' => $file['error'] ?: '(sin error)',
+            ]);
+            return $file;
+        });
+
         // capturar el wp_die que devuelve el 403
         $capture = function ($handler) {
             return function ($message, $title = '', $args = []) use ($handler) {
