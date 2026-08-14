@@ -66,6 +66,7 @@ jobs:
             --exclude='.env' \
             --exclude='.env.*' \
             --exclude='storage/' \
+            --exclude='bootstrap/cache/' \
             --exclude='vendor/' \
             --exclude='database/*.sqlite' \
             --exclude='database/*.sqlite3' \
@@ -76,3 +77,19 @@ jobs:
 
           ssh ${ssh_opts} "${DEPLOY_USER}@${DEPLOY_HOST}" \
             "test -f '${target}/artisan'"
+
+      - name: Rebuild caches
+        shell: bash
+        env:
+          DEPLOY_HOST: ${{ secrets.MY_DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.MY_DEPLOY_PORT }}
+          DEPLOY_USER: ${{ secrets.MY_DEPLOY_USER }}
+        run: |
+          set -euo pipefail
+          target=/var/www/my.millions.mx/htdocs
+          ssh_opts="-i ~/.ssh/my_deploy_key -p ${DEPLOY_PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
+
+          # packages.php / services.php live in bootstrap/cache, which php-fpm
+          # cannot write to, so they have to be regenerated here after deploy
+          ssh ${ssh_opts} "${DEPLOY_USER}@${DEPLOY_HOST}" \
+            "cd '${target}' && php artisan package:discover --ansi && php artisan config:clear && php artisan cache:clear && php artisan view:clear"
