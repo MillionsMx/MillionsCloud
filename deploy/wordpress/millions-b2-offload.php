@@ -100,8 +100,11 @@ function mmx_b2_authorize(): array|WP_Error
 /**
  * Sube un archivo local a B2. Devuelve ['fileId' => ..., 'key' => ...].
  */
-function mmx_b2_upload(string $path, string $key): array|WP_Error
-{
+function mmx_b2_upload(
+    string $path,
+    string $key,
+    string $content_type = '',
+): array|WP_Error {
     $auth = mmx_b2_authorize();
     if (is_wp_error($auth)) {
         return $auth;
@@ -140,7 +143,9 @@ function mmx_b2_upload(string $path, string $key): array|WP_Error
         'headers' => [
             'Authorization' => $upload['authorizationToken'],
             'X-Bz-File-Name' => implode('/', array_map('rawurlencode', explode('/', $key))),
-            'Content-Type' => mime_content_type($path) ?: 'b2/x-auto',
+            // el tipo lo da wordpress: mime_content_type() devuelve text/plain
+            // para pdf en este servidor
+            'Content-Type' => $content_type ?: 'b2/x-auto',
             'Content-Length' => (string) strlen($contents),
             'X-Bz-Content-Sha1' => sha1($contents),
         ],
@@ -186,7 +191,11 @@ add_action(
         $uploads = wp_get_upload_dir();
         $key = ltrim(str_replace($uploads['basedir'], '', $path), '/');
 
-        $result = mmx_b2_upload($path, $key);
+        $type =
+            get_post_mime_type($attachment_id) ?:
+            (wp_check_filetype($path)['type'] ?: '');
+
+        $result = mmx_b2_upload($path, $key, $type);
 
         if (is_wp_error($result)) {
             error_log('[mmx-b2] ' . $result->get_error_message());
