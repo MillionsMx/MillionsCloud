@@ -56,7 +56,7 @@ jobs:
           fi
 
           mkdir -p "\${dir}" 2>/dev/null || sudo -n mkdir -p "\${dir}"
-          for f in millions-b2-offload.php zz-delete-trace.php; do
+          for f in millions-b2-offload.php; do
             cp "/tmp/\$f" "\${dir}/" 2>/dev/null || sudo -n cp "/tmp/\$f" "\${dir}/"
             rm -f "/tmp/\$f"
             ls -l "\${dir}/\$f"
