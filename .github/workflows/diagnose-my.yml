@@ -1,0 +1,61 @@
+name: Diagnose my.millions.mx
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure SSH
+        shell: bash
+        env:
+          DEPLOY_KEY: ${{ secrets.MY_DEPLOY_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.MY_DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/my_deploy_key
+          chmod 600 ~/.ssh/my_deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Collect diagnostics
+        shell: bash
+        env:
+          DEPLOY_HOST: ${{ secrets.MY_DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.MY_DEPLOY_PORT }}
+          DEPLOY_USER: ${{ secrets.MY_DEPLOY_USER }}
+        run: |
+          set -euo pipefail
+          ssh_opts="-i ~/.ssh/my_deploy_key -p ${DEPLOY_PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
+          ssh ${ssh_opts} "${DEPLOY_USER}@${DEPLOY_HOST}" 'bash -s' <<'REMOTE'
+          set -u
+          target=/var/www/my.millions.mx/htdocs
+          cd "$target" || exit 1
+
+          echo "===== php -v ====="
+          php -v 2>&1 | head -2
+
+          echo "===== syntax check of edited files ====="
+          for f in app/Console/Kernel.php app/Console/Commands/ApplyMillionsBranding.php \
+                   config/common/themes.php config/common/default-settings.php; do
+            php -l "$f" 2>&1
+          done
+
+          echo "===== last laravel log (150 lines) ====="
+          ls -1t storage/logs/*.log 2>/dev/null | head -1 | xargs -r tail -n 150
+
+          echo "===== permissions / caches ====="
+          ls -ld storage storage/logs storage/framework bootstrap/cache public/storage 2>&1
+          ls -1 bootstrap/cache 2>&1
+
+          echo "===== web server error log (tail) ====="
+          tail -n 40 /var/log/nginx/error.log 2>/dev/null || \
+            tail -n 40 /var/log/apache2/error.log 2>/dev/null || \
+            echo "no readable web server log"
+          REMOTE
