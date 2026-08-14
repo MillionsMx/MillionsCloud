@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Millions B2 Offload
- * Description: Sube a Backblaze B2 todo lo que no sea imagen web y sirve sus URLs desde files.millions.mx. jpg, png, webp y demas imagenes se quedan locales.
+ * Description: Sube a Backblaze B2 los archivos pesados (video, audio, comprimidos) y sirve sus URLs desde files.millions.mx. Imagenes, pdf y documentos se quedan locales.
  * Version: 1.0
  * Author: Millions
  */
@@ -23,20 +23,32 @@ if (!defined('ABSPATH')) {
  *   define('MMX_B2_DELETE_LOCAL', true);   // borra el original del disco tras subir
  */
 
-// Imagenes web: se quedan SIEMPRE en local (wordpress les genera miniaturas).
-// Todo lo demas -- pdf, video, audio, zip, docs, lo que sea -- se va a B2.
-function mmx_b2_local_extensions(): array
+// Solo se va a B2 lo pesado: video, audio y comprimidos.
+//
+// Los pdf y documentos se quedan LOCALES a proposito: millions-tools los
+// cifra con gmm_encrypt_uploaded_file_by_url(), que solo actua sobre urls
+// de wp-content/uploads. Si un contrato acabara en la cdn publica, se
+// guardaria sin cifrar y seria accesible para cualquiera con el enlace.
+function mmx_b2_extensions(): array
 {
-    return apply_filters('mmx_b2_local_extensions', [
-        'jpg',
-        'jpeg',
-        'png',
-        'webp',
-        'gif',
-        'svg',
-        'avif',
-        'ico',
-        'bmp',
+    return apply_filters('mmx_b2_extensions', [
+        'mp4',
+        'mov',
+        'avi',
+        'mkv',
+        'webm',
+        'm4v',
+        'mp3',
+        'wav',
+        'aac',
+        'flac',
+        'zip',
+        'rar',
+        '7z',
+        'tar',
+        'gz',
+        'iso',
+        'psd',
     ]);
 }
 
@@ -183,8 +195,13 @@ add_action(
         }
 
         $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-        if (in_array($extension, mmx_b2_local_extensions(), true)) {
-            return; // imagenes web: se quedan locales
+        if (!in_array($extension, mmx_b2_extensions(), true)) {
+            return; // imagenes, pdf y documentos: se quedan locales
+        }
+
+        // red de seguridad: nunca sacar a la cdn publica un archivo cifrado
+        if (file_get_contents($path, false, null, 0, 8) === 'gmm_enc:') {
+            return;
         }
 
         // conservar la ruta year/month de wordpress para evitar colisiones
