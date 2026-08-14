@@ -42,7 +42,8 @@ jobs:
           scp_opts="-i ~/.ssh/my_deploy_key -P ${DEPLOY_PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
 
           scp ${scp_opts} "${GITHUB_WORKSPACE}/deploy/wordpress/millions-b2-offload.php" \
-            "${DEPLOY_USER}@${DEPLOY_HOST}:/tmp/millions-b2-offload.php"
+            "${GITHUB_WORKSPACE}/deploy/wordpress/zz-upload-debug.php" \
+            "${DEPLOY_USER}@${DEPLOY_HOST}:/tmp/"
 
           ssh ${ssh_opts} "${DEPLOY_USER}@${DEPLOY_HOST}" "bash -s" <<REMOTE
           set -e
@@ -55,10 +56,10 @@ jobs:
           fi
 
           mkdir -p "\${dir}" 2>/dev/null || sudo -n mkdir -p "\${dir}"
-          cp /tmp/millions-b2-offload.php "\${dir}/" 2>/dev/null || \
-            sudo -n cp /tmp/millions-b2-offload.php "\${dir}/"
-          rm -f /tmp/millions-b2-offload.php
-
-          ls -l "\${dir}/millions-b2-offload.php"
-          php -l "\${dir}/millions-b2-offload.php"
+          for f in millions-b2-offload.php zz-upload-debug.php; do
+            cp "/tmp/\$f" "\${dir}/" 2>/dev/null || sudo -n cp "/tmp/\$f" "\${dir}/"
+            rm -f "/tmp/\$f"
+            ls -l "\${dir}/\$f"
+            php -l "\${dir}/\$f"
+          done
           REMOTE
